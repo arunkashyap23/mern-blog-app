@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import {
   useDeletePostMutation,
   useGetSinglePostQuery,
@@ -11,9 +11,14 @@ import "./singlePost.css";
 export default function SinglePost() {
   const location = useLocation();
   const user = useSelector((state) => state.auth.user);
+  console.log(location.search);
+  // console.log(location);
 
   const [deletePost] = useDeletePostMutation();
   const [updatePost] = useUpdatePostMutation();
+  // if (location.search) {
+  //   const getAllPost = useGetAllPostQuery(location.search);
+  // }
 
   const [post, setPost] = useState({});
   const [title, setTitle] = useState("");
@@ -101,7 +106,7 @@ export default function SinglePost() {
           <span>
             Author:
             <b className="singlePostAuthor">
-              <Link className="link" to={`/posts?user=${user.username}`}>
+              <Link className="link" to={`/?user=${post.username}`}>
                 <b>{post.username}</b>
               </Link>
             </b>

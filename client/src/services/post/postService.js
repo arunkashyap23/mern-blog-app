@@ -6,9 +6,10 @@ export const postApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api/posts/" }),
   endpoints: (builder) => ({
     getAllPost: builder.query({
-      query: () => {
+      query: (query) => {
+        console.log(query);
         return {
-          url: `/`,
+          url: query ? query : "/",
           method: "GET",
         };
       },

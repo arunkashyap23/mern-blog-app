@@ -1,10 +1,12 @@
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useGetAllPostQuery } from "../../services/post/postService";
 import Post from "../post/Post";
 import "./posts.css";
 
 export default function Posts() {
-  const getAllPost = useGetAllPostQuery();
+  const location = useLocation();
+  const getAllPost = useGetAllPostQuery(location.search);
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
