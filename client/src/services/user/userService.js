@@ -7,7 +7,6 @@ export const userApi = createApi({
   endpoints: (builder) => ({
     updateUser: builder.mutation({
       query: ({ userId, token, ...others }) => {
-        console.log(token);
         return {
           url: `/${userId}`,
           method: "PUT",

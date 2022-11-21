@@ -27,6 +27,7 @@ userRouter.put("/:id", checkUserAuth, async (req, res) => {
         message: "user updated successfully",
         id: updatedUser._id,
         username: updatedUser.username,
+        profilePic: updatedUser.profilePic,
       });
     } catch (error) {
       res.status(500).json(error);

@@ -9,6 +9,7 @@ import {
 import "./singlePost.css";
 
 export default function SinglePost() {
+  const PF = "http://localhost:5000/images/";
   const location = useLocation();
   const user = useSelector((state) => state.auth.user);
 
@@ -66,11 +67,9 @@ export default function SinglePost() {
   return (
     <div className="singlePost">
       <div className="singlePostWrapper">
-        <img
-          className="singlePostImg"
-          src="https://images.pexels.com/photos/6685428/pexels-photo-6685428.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-          alt=""
-        />
+        {post.photo && (
+          <img className="singlePostImg" src={PF + post.photo} alt="" />
+        )}
         {updateMode ? (
           <input
             type="text"

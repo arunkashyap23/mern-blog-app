@@ -7,7 +7,6 @@ export const postApi = createApi({
   endpoints: (builder) => ({
     getAllPost: builder.query({
       query: (query) => {
-        // console.log(query);
         return {
           url: query ? query : "/",
           method: "GET",

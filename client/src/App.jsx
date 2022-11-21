@@ -7,6 +7,8 @@ import Single from "./pages/single/Single";
 import Write from "./pages/write/Write";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const user = useSelector((state) => state.auth.user);
@@ -23,9 +25,13 @@ function App() {
             element={user ? <Settings /> : <Register />}
           />
           <Route path="/login" element={user ? <Homepage /> : <Login />} />
-          <Route path="/register" element={user ? <Homepage /> : <Register />} />
+          <Route
+            path="/register"
+            element={user ? <Homepage /> : <Register />}
+          />
         </Routes>
       </Router>
+      <ToastContainer />
     </>
   );
 }

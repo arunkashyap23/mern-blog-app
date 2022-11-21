@@ -10,16 +10,25 @@ import {
   deleteUserDispatch,
   updateUserDispatch,
 } from "../../features/auth/authSlice";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Settings() {
+  const PF = "http://localhost:5000/images/";
+
+  const [file, setFile] = useState(null);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const user = useSelector((state) => state.auth.user);
+
   const [updateUser, { isSuccess }] = useUpdateUserMutation();
   const [deleteUser] = useDeleteUserMutation();
 
+  const dispatch = useDispatch();
+  
   const data = {
     userId: user.id,
     username,
@@ -28,11 +37,10 @@ export default function Settings() {
     token: user.token,
   };
 
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isSuccess) {
-      alert("User Updated Successfully");
+      toast.success("User Updated Successfully", { autoClose: 1500 });
       setTimeout(() => {
         window.location.reload("/settings");
       }, 2000);
@@ -41,12 +49,20 @@ export default function Settings() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (file) {
+      const data1 = new FormData();
+      const filename = Date.now() + file.name;
+      data1.append("name", filename);
+      data1.append("file", file);
+      data.profilePic = filename;
+      try {
+        await axios.post("http://localhost:5000/api/upload", data1);
+      } catch (err) {}
+    }
     const res = await updateUser(data);
     if (res.data.status === "success") {
       dispatch(updateUserDispatch(res.data));
-      const usernameValueFromLS = JSON.parse(localStorage.getItem("user"));
-      usernameValueFromLS.username = res.data.username;
-      localStorage.setItem("user", JSON.stringify(usernameValueFromLS));
+      localStorage.setItem("user", JSON.stringify({ ...user, ...res.data }));
     }
   };
 
@@ -78,7 +94,7 @@ export default function Settings() {
           <label>Profile Picture</label>
           <div className="settingsPP">
             <img
-              src="https://images.pexels.com/photos/6685428/pexels-photo-6685428.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+              src={file ? URL.createObjectURL(file) : PF + user.profilePic}
               alt=""
             />
             <label htmlFor="fileInput">
@@ -89,6 +105,7 @@ export default function Settings() {
               type="file"
               style={{ display: "none" }}
               className="settingsPPInput"
+              onChange={(e) => setFile(e.target.files[0])}
             />
           </div>
           <label>Username</label>

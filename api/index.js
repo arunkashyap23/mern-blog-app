@@ -20,7 +20,7 @@ const db = process.env.DATABASE_URL;
 
 //config json file
 app.use(express.json());
-
+app.use(express.urlencoded({ extended: false }));
 //cors
 app.use(cors());
 

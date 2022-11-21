@@ -48,6 +48,7 @@ authRouter.post("/login", async (req, res) => {
             id: user._id,
             username: user.username,
             token: token,
+            profilePic: user.profilePic,
           });
         } catch (error) {
           res
@@ -75,6 +76,5 @@ authRouter.post("/login", async (req, res) => {
 authRouter.get("/logged-in-user", checkUserAuth, async (req, res) => {
   res.send({ user: req.user });
 });
-
 
 export default authRouter;
