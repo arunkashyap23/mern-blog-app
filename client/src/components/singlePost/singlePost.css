@@ -100,3 +100,7 @@
   align-self: flex-end;
   margin-top: 20px;
 }
+
+@media (max-width: 667px) {
+  
+}
