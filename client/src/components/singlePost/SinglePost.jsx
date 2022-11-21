@@ -63,7 +63,6 @@ export default function SinglePost() {
     }
   };
 
-
   return (
     <div className="singlePost">
       <div className="singlePostWrapper">
@@ -102,7 +101,7 @@ export default function SinglePost() {
           <span>
             Author:
             <b className="singlePostAuthor">
-              <Link className="link" to="/posts?username=Safak">
+              <Link className="link" to={`/posts?user=${user.username}`}>
                 <b>{post.username}</b>
               </Link>
             </b>
